@@ -257,9 +257,40 @@ class MemberRepositoryTest {
             System.out.println("member.class = " + member.getTeam().getClass());
             System.out.println("member.team = " + member.getTeam().getName());
         }
-
-
     }
+
+    @Test
+    public void queryHint() {
+        //given
+        Member member1 = new Member("member1", 10);
+        memberRepository.save(member1);
+        em.flush();
+        em.clear();
+
+        //when
+        Member findMember = memberRepository.findReadOnlyByUsername("member1");//변경 감지를 안함
+
+        findMember.setUsername("member2");//update 쿼리 안날아감
+        em.flush();
+    }
+
+    @Test
+    public void lock() {
+        //given
+        Member member1 = new Member("member1", 10);
+        memberRepository.save(member1);
+        em.flush();
+        em.clear();
+
+        //when
+        List<Member> result = memberRepository.findLockByUsername("member1");// 쿼리를 보는게 중요
+    }
+
+    @Test
+    public void callCustom() {
+        List<Member> result = memberRepository.findMemberCustom();
+    }
+
 
 
 }

@@ -7,11 +7,16 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
-
     properties:
       hibernate:
       #show_sql: true
         format_sql: true
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 2000
+        one-indexed-parameters: true # 페이지를 0부터가 아닌 1부터 하기 위한 옵션 한계 있음 -> pageable 정보가 안맞음
 
 logging.level:
   org.hibernate.SQL: debug
