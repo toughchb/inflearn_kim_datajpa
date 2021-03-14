@@ -36,7 +36,7 @@ public class MemberController {
                 //.map(member -> new MemberDto(member.getId(), member.getUsername(), null));
                 .map(MemberDto::new); // MemberDto 생성자로 엔티티를 받게 함 -> 메소드 레퍼런스로 바꿀수 있음
    }
-    @PostConstruct
+    //@PostConstruct
     public void init() {
         for (int i = 0; i < 100; i++) {
             memberRepository.save(new Member("user" + i,i));
